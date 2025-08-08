@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AnkiAbout from "./pages/AnkiAbout";
 import LearningPage from "./pages/LearningPage";
 import TopicDetailPage from "./pages/TopicDetailPage";
-import AboutPage from "./pages/Aboutpage";
+import AboutPage from "./pages/AboutPage";
 import StudyReminder from "./components/StudyReminder";
 import Footer from "./components/Footer";
 import Docs from "./pages/Docs";
