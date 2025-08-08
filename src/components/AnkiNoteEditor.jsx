@@ -25,8 +25,8 @@ const AnkiNoteEditor = ({ onNoteCreated, editNote, clearEdit }) => {
 
     const method = editNote ? "PUT" : "POST";
     const url = editNote
-      ? `http://localhost:8000/api/anki/${editNote._id}`
-      : `http://localhost:8000/api/anki`;
+      ? `${import.meta.env.VITE_API_BASE_URL}/anki/${editNote._id}`
+      : `${import.meta.env.VITE_API_BASE_URL}/anki`;
 
     try {
       const res = await fetch(url, {

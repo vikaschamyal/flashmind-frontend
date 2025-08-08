@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const AnkiPage = () => {
   const [notes, setNotes] = useState([]);
@@ -19,7 +20,7 @@ const AnkiPage = () => {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/anki", getAuthHeader());
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/anki`, getAuthHeader());
       setNotes(res.data);
     } catch (error) {
       console.error("Failed to fetch notes:", error.response?.data?.message || error.message);
@@ -37,14 +38,14 @@ const AnkiPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!front || !back) return alert("Please fill both front and back");
+    if (!front || !back) return alert("Please fill both Question and Answer");
 
     try {
       if (editId) {
-        await axios.put(`http://localhost:8000/api/anki/${editId}`, { front, back }, getAuthHeader());
+        await axios.put(`${import.meta.env.VITE_API_BASE_URL}/anki/${editId}`, { front, back }, getAuthHeader());
         setEditId(null);
       } else {
-        await axios.post("http://localhost:8000/api/anki", { front, back }, getAuthHeader());
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/anki`, { front, back }, getAuthHeader());
       }
 
       setFront("");
@@ -57,14 +58,14 @@ const AnkiPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/anki/${id}`, getAuthHeader());
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/anki/${id}`, getAuthHeader());
       fetchNotes();
     } catch (error) {
       console.error("Error deleting note:", error.response?.data?.message || error.message);
       alert(error.response?.data?.message || "Error deleting note");
     }
   };
-  
+
   const handleEdit = (note) => {
     setEditId(note._id);
     setFront(note.front);
@@ -72,34 +73,43 @@ const AnkiPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa] text-gray-800 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 text-gray-800 py-10 px-4">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-4xl font-bold mb-8 text-center text-blue-700">🧠 FlashMind - Anki Notes</h2>
 
-        {/* Form Section */}
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-4xl font-bold text-blue-700">🧠 FlashMind Learning Notes</h2>
+          <Link
+            to="/learning"
+            className="text-blue-600 hover:underline text-sm font-medium"
+          >
+            ← Go to Learning 
+          </Link>
+        </div>
+
+        {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mb-10"
+          className="bg-white border border-blue-100 rounded-xl shadow-lg p-6 mb-10"
         >
-          <div className="grid sm:grid-cols-2 gap-4 mb-4">
+          <div className="grid sm:grid-cols-2 gap-6 mb-4">
             <div>
-              <label className="block font-medium text-gray-700 mb-1">Front (Question)</label>
+              <label className="block text-sm font-semibold text-blue-600 mb-1">Flashcard Question</label>
               <input
                 type="text"
-                placeholder="e.g. What is React?"
+                placeholder="e.g. What is useState?"
                 value={front}
                 onChange={(e) => setFront(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                className="w-full px-4 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700 mb-1">Back (Answer)</label>
+              <label className="block text-sm font-semibold text-blue-600 mb-1">Answer</label>
               <input
                 type="text"
-                placeholder="e.g. A JavaScript library for UI"
+                placeholder="e.g. A React Hook for state"
                 value={back}
                 onChange={(e) => setBack(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                className="w-full px-4 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
           </div>
@@ -112,16 +122,16 @@ const AnkiPage = () => {
           </button>
         </form>
 
-        {/* Notes Section */}
+        {/* Notes Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {notes.map((note) => (
             <div
               key={note._id}
-              className="bg-white border border-gray-200 rounded-lg shadow p-5 flex flex-col justify-between"
+              className="bg-white border border-blue-200 rounded-xl shadow-md p-5 flex flex-col justify-between hover:shadow-lg transition"
             >
               <div>
                 <p className="font-semibold text-blue-700 mb-2">Q: {note.front}</p>
-                <p className="text-gray-700">A: {note.back}</p>
+                <p className="text-gray-800">A: {note.back}</p>
               </div>
 
               <div className="flex justify-end gap-4 mt-4">

@@ -13,7 +13,8 @@ const Login = () => {
     setError("");
   
     try {
-      const res = await axios.post("http://localhost:8000/api/auth/login", {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, {
+
         email,
         password,
       });
@@ -26,7 +27,7 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
   
-      navigate("/anki");
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
     }

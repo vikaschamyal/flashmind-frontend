@@ -11,20 +11,25 @@ import LearningPage from "./pages/LearningPage";
 import TopicDetailPage from "./pages/TopicDetailPage";
 import AboutPage from "./pages/Aboutpage";
 import StudyReminder from "./components/StudyReminder";
+import Footer from "./components/Footer";
+import Docs from "./pages/Docs";
+import FloatingNavbar from "./components/FloatingNavbar";
 
-import PenCursor from "./components/PenCursor";
+
 
 const App = () => {
   return (
     <>
     
       <Navbar />
-      <PenCursor />
+      <FloatingNavbar />
+     
       <Routes>
         <Route path="/" element={<AnkiAbout/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/docs" element={<Docs />} />
 
       
         <Route element={<ProtectedRoute />}>
@@ -33,8 +38,9 @@ const App = () => {
           
           <Route path="/learning" element={<LearningPage />} />
           <Route path="/learning/:id" element={<TopicDetailPage />} />   
-      </Route> 
+      </Route>
       </Routes>
+      <Footer /> 
       </>
   );
 };

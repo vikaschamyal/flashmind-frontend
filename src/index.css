@@ -16,7 +16,5 @@
     transform: rotateY(180deg);
   }
 
-* {
-    cursor: none; /* Hides the default system cursor */
-}
+
   

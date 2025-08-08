@@ -106,7 +106,7 @@ const AnkiAbout = () => {
         {/* Call to Action */}
         <div className="text-center mt-12">
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">
-            🚀 Ready to Build a Smarter Brain?
+             Ready to Build a Smarter Brain?
           </h3>
           <p className="mb-6 text-gray-700">
             Start saving your flashcards and notes today. Experience deep learning with FlashMind.
