@@ -16,5 +16,9 @@
     transform: rotateY(180deg);
   }
 
-
+@layer components {
+    .nav-link {
+      @apply text-cyan-400 font-semibold transition duration-300 hover:text-white hover:scale-105;
+    }
+}
   

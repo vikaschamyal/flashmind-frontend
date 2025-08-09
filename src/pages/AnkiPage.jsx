@@ -20,7 +20,7 @@ const AnkiPage = () => {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/anki`, getAuthHeader());
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/anki`, getAuthHeader());
       setNotes(res.data);
     } catch (error) {
       console.error("Failed to fetch notes:", error.response?.data?.message || error.message);
@@ -42,10 +42,10 @@ const AnkiPage = () => {
 
     try {
       if (editId) {
-        await axios.put(`${import.meta.env.VITE_API_BASE_URL}/anki/${editId}`, { front, back }, getAuthHeader());
+        await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/anki/${editId}`, { front, back }, getAuthHeader());
         setEditId(null);
       } else {
-        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/anki`, { front, back }, getAuthHeader());
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/anki`, { front, back }, getAuthHeader());
       }
 
       setFront("");
@@ -58,7 +58,7 @@ const AnkiPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/anki/${id}`, getAuthHeader());
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/anki/${id}`, getAuthHeader());
       fetchNotes();
     } catch (error) {
       console.error("Error deleting note:", error.response?.data?.message || error.message);
